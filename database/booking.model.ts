@@ -19,6 +19,13 @@ export interface BookingProps {
 export type BookingDocument = HydratedDocument<BookingProps>;
 export type BookingModel = Model<BookingProps>;
 
+/*
+* Simple email validation
+ Prevents:
+ - abc@
+ - @gmail.com
+ - test@@gmail.com
+*/
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const BookingSchema = new Schema<BookingProps>(
@@ -45,8 +52,10 @@ const BookingSchema = new Schema<BookingProps>(
   }
 );
 
+// creates db index to make queries faster
 BookingSchema.index({ eventId: 1 });
 
+//Runs logic automatically BEFORE saving a document to the database. runs before .save(), .create() but not on update
 BookingSchema.pre('save', async function () {
   // Ensure eventId references a real Event before accepting a booking.
   if (this.isNew || this.isModified('eventId')) {

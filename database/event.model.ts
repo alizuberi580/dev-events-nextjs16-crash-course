@@ -26,13 +26,18 @@ export interface EventProps {
 }
 
 export type EventDocument = HydratedDocument<EventProps>;
+//The class used to query (find, create, etc.)
 export type EventModel = Model<EventProps>;
 
+//Prevents " " from passing validation
+// Used in many fields
 const isNonEmptyString = (v: string): boolean => v.trim().length > 0;
 
+//normalizing string iputs
 const normalizeStringArray = (values: string[]): string[] =>
   values.map((v) => v.trim()).filter((v) => v.length > 0);
 
+// normalize date to ISO format
 const normalizeDateToISODate = (raw: string): string => {
   const value = raw.trim();
   if (!value) throw new Error('Event date is required.');
@@ -52,6 +57,7 @@ const normalizeDateToISODate = (raw: string): string => {
   return d.toISOString().slice(0, 10);
 };
 
+//normalize time to 24hr format
 const normalizeTimeToHHmm = (raw: string): string => {
   const value = raw.trim();
   if (!value) throw new Error('Event time is required.');
@@ -86,6 +92,7 @@ const normalizeTimeToHHmm = (raw: string): string => {
   throw new Error(`Invalid event time: ${raw}`);
 };
 
+//slug gen. from "My first Event!!" to 'my-first-event'
 const slugifyTitle = (title: string): string => {
   // Simple slugification: lowercase + hyphenate non-alphanumerics.
   const slug = title
@@ -231,8 +238,16 @@ const EventSchema = new Schema<EventProps>(
   }
 );
 
+/*
+* MondoDB index on slug
+* ensures no duplicate slugs
+* */
 EventSchema.index({ slug: 1 }, { unique: true });
 
+
+/*
+* pre-save hook
+* */
 EventSchema.pre('save', async function () {
   // Only regenerate slug when the title changes (or slug is missing).
   if (!this.slug || this.isModified('title')) {
