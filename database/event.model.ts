@@ -8,7 +8,7 @@ import {
 
 export interface EventProps {
   title: string;
-  slug?: string;
+  slug: string;
   description: string;
   overview: string;
   image: string;
@@ -33,9 +33,13 @@ export type EventModel = Model<EventProps>;
 // Used in many fields
 const isNonEmptyString = (v: string): boolean => v.trim().length > 0;
 
-//normalizing string iputs
-const normalizeStringArray = (values: string[]): string[] =>
-  values.map((v) => v.trim()).filter((v) => v.length > 0);
+//normalizing string inputs
+const normalizeStringArray = (values?: string[] | null): string[] => {
+  if (!Array.isArray(values)) return [];
+  return values
+      .map(v => v.trim())
+      .filter(v => v.length > 0);
+};
 
 // normalize date to ISO format
 const normalizeDateToISODate = (raw: string): string => {
