@@ -6,7 +6,7 @@ import { Event } from '@/database';
 import type { EventProps } from '@/database/event.model';
 
 // Mongoose requires the Node.js runtime (not Edge).
-export const runtime = 'nodejs';
+//export const runtime = 'nodejs';
 
 // Next.js provides dynamic route params via the 2nd handler arg.
 type RouteParams = {

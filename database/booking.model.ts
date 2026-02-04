@@ -36,6 +36,7 @@ const BookingSchema = new Schema<BookingProps>(
       required: true,
       index: true,
     },
+
     email: {
       type: String,
       required: true,
