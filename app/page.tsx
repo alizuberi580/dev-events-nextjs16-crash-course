@@ -1,35 +1,36 @@
 import React from 'react'
 import ExploreBtn from "@/components/ExploreBtn";
 import EventCard from "@/components/EventCard";
-import {EventProps} from "@/database/event.model";
-import {cacheLife} from "next/cache";
-
+import { EventProps } from "@/database/event.model";
+import { cacheLife } from "next/cache";
+import events, { EventItem } from '@/lib/constants';
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
-const Page =async () => {
+const Page = async () => {
     'use cache'
     cacheLife('hours')
-    const response = await fetch(`${BASE_URL}/api/events`);
-    const { events } = await response.json();
+
+    // Fetch from API (currently disabled - using static data)
+    // const response = await fetch(`${BASE_URL}/api/events`);
+    // const { events } = await response.json();
+
     return (
         <section>
-            <h1 className="text-center">The Hub for Every Dev <br/> Event You Can't Miss </h1>
+            <h1 className="text-center">The Hub for Every Dev <br /> Event You Can't Miss </h1>
             <p className="text-center mt-5">Hackathons, Meetups, and Conferences, All in one place</p>
-            <ExploreBtn/>
+            <ExploreBtn />
 
             <div className={"mt-20 space-y-7"}>
                 <h3>Featured Events</h3>
                 <ul className={"events list-none"}>
-                    {events && events.length>0 && events.map((event:EventProps)=>(
+                    {events && events.length > 0 && events.map((event: EventItem) => ( //make EventItem type EventProp after deploying and pushing again to main
                         <li key={event.title} className={"list-none"}>
-                            <EventCard {...event}/>
+                            <EventCard {...event} />
                         </li>)
                     )}
                 </ul>
             </div>
         </section>
-
-
     )
 }
 export default Page
@@ -67,12 +68,12 @@ What they CANNOT do
   With cache:
   Request → return saved result (skip DB + render)
 
-  i) cache Life (TTL) – “How long should this stay cached?"
+  i) cache Life (TTL) – "How long should this stay cached?"
   * when to use
    ✔ Public pages
    ✔ Data that changes occasionally
    ✔ SEO pages
-  ii) Cache Tags – “Which cached things should be invalidated together?”
+  ii) Cache Tags – "Which cached things should be invalidating together?"
    Update happens → cache is cleared immediately
    Users see fresh data instantly
 * */
