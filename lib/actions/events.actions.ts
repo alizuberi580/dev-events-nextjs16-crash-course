@@ -16,3 +16,9 @@ export const getSimilarEventsBySlug = async (slug: string)=>{
         return []
     }
 }
+//this is called server actions
+/*
+The server action is your internal shortcut — built for use within the Next.js app, 
+direct function call, no network overhead, simpler code. 
+Same database, same data, fundamentally different transport layer.
+*/

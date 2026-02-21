@@ -1,6 +1,4 @@
 'use client'
-
-import { usePathname, useSearchParams } from "next/navigation"
 import { useEffect } from "react"
 
 import posthog from 'posthog-js'
@@ -20,3 +18,5 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
         </PHProvider>
     )
 }
+/* why use client header here --> useEffect is client only hook, and runs only in the browser
+and posthog.init() needs browser APIs. Inside that useEffect, PostHog is initializing*/

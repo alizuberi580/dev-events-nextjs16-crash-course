@@ -45,3 +45,14 @@ const BookEvent = ({eventId, slug}:{eventId:string; slug:string}) => {
     )
 }
 export default BookEvent
+/*
+* Without e.preventDefault()
+Your handleSubmit function starts running
+Simultaneously, the browser triggers its default form submission
+The page fully reloads — wiping all React state, cancelling your await createBooking() call mid-flight, and navigating away
+Your setSubmitted(true) never runs
+The PostHog event never fires
+The user sees nothing — just a reloaded page
+
+* with e.preventDefault(), we tell browser to do do noting on its own, Iam in full control 
+*/

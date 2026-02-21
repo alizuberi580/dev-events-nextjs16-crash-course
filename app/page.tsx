@@ -34,7 +34,21 @@ const Page = async () => {
     )
 }
 export default Page
+/*
+'use cache':
+What it does: it tells Next.js to cache the result of this entire async function. 
+The first time someone visits the page, it runs the function, fetches from the API, 
+renders the HTML, and stores the result in a cache. 
+Every subsequent visitor gets the cached HTML instantly without re-running the 
+function at all — no DB query, no API call, no rendering work.
 
+cache life('hours'):
+This controls how long the cache lives. 
+'hours' is a preset that tells Next.js to keep the cached version fresh for a few hours b
+efore regenerating it. When the cache expires, the next request triggers a fresh fetch 
+and re-render, and that new result becomes the new cached version.
+
+*/
 /*
 * Client side rendering example:
 * Buttons including onClick prop, animation,

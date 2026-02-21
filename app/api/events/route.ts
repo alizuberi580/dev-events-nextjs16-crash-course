@@ -26,8 +26,8 @@ export async function POST(req:NextRequest){
         const file = formData.get('image') as File;
         if(!file)return NextResponse.json({message:'Image file is required'}, {status:400})
 
-        let tags = JSON.parse(formData.get('tags') as string);
-        let agenda = JSON.parse(formData.get('agenda') as string);
+        const tags = JSON.parse(formData.get('tags') as string);
+        const agenda = JSON.parse(formData.get('agenda') as string);
 
         const arrayBuffer = await file.arrayBuffer();
         const buffer = Buffer.from(arrayBuffer);
@@ -39,6 +39,7 @@ export async function POST(req:NextRequest){
             }).end(buffer);
         });
 
+        //stroing cloudniary image url in our database, not the actual image
         event.image = (uploadResult as {secure_url:string}).secure_url;
 
         //const createdEvent = await Event.create(event)
@@ -68,3 +69,7 @@ export async function GET() {
     }
 }
 // a route that accepts slug as an input and returns the event against it
+/*
+The API route is your public HTTP interface — built for external consumers, 
+carries full HTTP overhead, validated defensively, returns proper status codes
+*/

@@ -281,6 +281,13 @@ EventSchema.pre('save', async function () {
   this.date = normalizeDateToISODate(this.date);
   this.time = normalizeTimeToHHmm(this.time);
 });
-
+/*
+ *via Event.create(), doc.save(), or certain update methods — Mongoose intercepts it, runs this function first, 
+   lets you modify the document, and only then writes to the database. 
+ *Inside Mongoose hooks, "this" refers to the document being saved. 
+   Arrow functions don't have their own this
+ *
+ 
+*/
 export const Event: EventModel =
   (models.Event as EventModel) || model<EventProps>('Event', EventSchema);

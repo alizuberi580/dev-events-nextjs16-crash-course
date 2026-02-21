@@ -33,7 +33,8 @@ const MONGODB_URI = process.env.MONGODB_URI;
 /* WHY? If global.mongoose exists → reuse it
    Otherwise → create a new empty cache. This is the heart of the connection reuse logic.
 * */
-let cached: MongooseCache = global.mongoose || { conn: null, promise: null };
+//cached mein global.mongoose ko assign kar rahe hain, agar woh null hai toh ek naya object de rahe hain jisme conn aur promise dono null hain
+const cached: MongooseCache = global.mongoose || { conn: null, promise: null };
 
 /* WHY? ensures cache lives globally
 * */

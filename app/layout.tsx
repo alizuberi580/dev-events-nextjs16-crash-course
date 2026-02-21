@@ -5,6 +5,14 @@ import LightRays from "@/components/LightRays";
 import Navbar from "@/components/Navbar";
 import { PostHogProvider } from './providers';
 
+
+//each font martianmono and schibsted grotesk is imported as a variable and 
+//then used in the body className to apply the font globally across the app. 
+//The variable property allows us to define a custom CSS variable that can be used to 
+//reference the font in our styles. By including both fonts in the body className, 
+//we ensure that they are available throughout the entire application, allowing us to 
+//use them in any component or page as needed.
+//imported as functions from google and then used to return an object
 const schibstedGrotesk = Schibsted_Grotesk({
   variable: "--font-schibsted_grotesk",
   subsets: ["latin"],
